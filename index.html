@@ -242,6 +242,96 @@
             opacity: 0.65;
         }
 
+        .savepath-hint-wrap {
+            position: relative;
+            text-align: right;
+            margin-top: 6px;
+        }
+
+        .upload-savepath-hint {
+            font-size: 11px;
+            color: var(--text);
+            opacity: 0.45;
+            letter-spacing: 0.08em;
+            cursor: pointer;
+            text-decoration: underline dotted;
+            text-underline-offset: 2px;
+            transition: opacity 0.15s;
+        }
+
+        .upload-savepath-hint:hover {
+            opacity: 0.75;
+        }
+
+        .savepath-popup {
+            display: none;
+            position: absolute;
+            bottom: calc(100% + 8px);
+            right: 0;
+            background: #F3E6D4;
+            border: 4px solid #BDB3A4;
+            outline: 1px solid #000;
+            box-shadow: inset 0 0 0 1px #000, 0 6px 20px rgba(0,0,0,0.5);
+            padding: 14px 16px 12px;
+            text-align: left;
+            font-size: 11px;
+            color: #2D1A00;
+            z-index: 10;
+            min-width: 290px;
+            max-width: 420px;
+        }
+
+        .savepath-popup.is-open {
+            display: block;
+        }
+
+        .savepath-popup-label {
+            font-size: 9px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #8B6B3A;
+            margin-bottom: 8px;
+        }
+
+        .savepath-code {
+            display: block;
+            font-family: var(--mono);
+            font-size: 11px;
+            color: #5C3A1A;
+            background: #EDE3C5;
+            border: 1px solid #B09060;
+            padding: 8px 10px;
+            margin-bottom: 8px;
+            user-select: all;
+            cursor: text;
+            word-break: break-all;
+        }
+
+        .savepath-popup-note {
+            font-size: 10px;
+            color: #8B6B3A;
+            letter-spacing: 0.05em;
+        }
+
+        .savepath-popup-close {
+            position: absolute;
+            top: 6px;
+            right: 8px;
+            background: none;
+            border: none;
+            color: #8B6B3A;
+            cursor: pointer;
+            font-size: 13px;
+            opacity: 0.5;
+            padding: 2px 5px;
+            line-height: 1;
+            transition: opacity 0.15s;
+        }
+
+        .savepath-popup-close:hover {
+            opacity: 1;
+        }
+
         /* ── INFO GRID ───────────────────────────────────── */
         .info-grid {
             display: grid;
@@ -848,6 +938,15 @@
         </div>
         <input type="file" id="fileInput" class="d-none" accept=".sav">
     </div>
+    <div class="savepath-hint-wrap">
+        <span class="upload-savepath-hint" id="savepathHint">Where are my save files?</span>
+        <div class="savepath-popup" id="savepathPopup">
+            <button class="savepath-popup-close" id="savepathClose">&#x2715;</button>
+            <div class="savepath-popup-label">Save file location</div>
+            <code class="savepath-code">%LOCALAPPDATA%\Dispatch\Saved\SaveGames</code>
+            <div class="savepath-popup-note">PC only, sorry</div>
+        </div>
+    </div>
 
     <!-- File Info Section -->
     <div id="fileInfoSection" class="d-none">
@@ -1207,6 +1306,24 @@
 
     resetBtn.addEventListener('click', resetToUpload);
     ejectBtn.addEventListener('click', resetToUpload);
+
+    const savepathHint  = document.getElementById('savepathHint');
+    const savepathPopup = document.getElementById('savepathPopup');
+    const savepathClose = document.getElementById('savepathClose');
+
+    savepathHint.addEventListener('click', (e) => {
+        e.stopPropagation();
+        savepathPopup.classList.toggle('is-open');
+    });
+
+    savepathClose.addEventListener('click', (e) => {
+        e.stopPropagation();
+        savepathPopup.classList.remove('is-open');
+    });
+
+    savepathPopup.addEventListener('click', (e) => e.stopPropagation());
+
+    document.addEventListener('click', () => savepathPopup.classList.remove('is-open'));
 </script>
 </body>
 </html>
