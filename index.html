@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SDN Career Growth Console</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <title>SDN Record Department</title>
+    <link rel="icon" type="image/png" href="/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Caveat:wght@400;700&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -47,7 +48,7 @@
                 rgba(0, 0, 0, 0.07) 4px
             );
             pointer-events: none;
-            z-index: 9999;
+            z-index: 1;
         }
 
         /* Subtle dot grid */
@@ -64,10 +65,10 @@
 
         .page {
             position: relative;
-            z-index: 1;
+            z-index: 2;
             max-width: 900px;
             margin: 0 auto;
-            padding: 28px 20px 60px;
+            padding: 28px 20px 80px;
         }
 
         /* ── HEADER ──────────────────────────────────────── */
@@ -158,40 +159,23 @@
         /* ── PANELS ──────────────────────────────────────── */
         .panel {
             position: relative;
-            background: var(--panel);
-            border: 1px solid var(--cyan-dim);
+            background: #242825;
+            background: linear-gradient(85deg,rgba(36, 40, 37, 1) 0%, rgba(27, 32, 28, 1) 100%);
+            border: 5px solid #000;
             padding: 20px;
             margin-bottom: 16px;
-        }
-
-        /* Corner brackets */
-        .panel::before {
-            content: '';
-            position: absolute;
-            top: -1px; left: -1px;
-            width: 14px; height: 14px;
-            border-top: 2px solid var(--cyan);
-            border-left: 2px solid var(--cyan);
-        }
-        .panel::after {
-            content: '';
-            position: absolute;
-            bottom: -1px; right: -1px;
-            width: 14px; height: 14px;
-            border-bottom: 2px solid var(--cyan);
-            border-right: 2px solid var(--cyan);
+            border-radius: 5pt;
         }
 
         .panel-label {
             font-family: var(--display);
-            font-size: 9px;
+            font-size: 12px;
             font-weight: 700;
-            color: var(--cyan);
+            color: #ffffffb5;
             letter-spacing: 0.25em;
-            text-transform: uppercase;
             padding-bottom: 12px;
             margin-bottom: 14px;
-            border-bottom: 1px solid var(--cyan-dim);
+            border-bottom: 2px solid #000;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -200,25 +184,37 @@
         /* ── UPLOAD ZONE ─────────────────────────────────── */
         #uploadZone {
             cursor: pointer;
-            transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
-        }
-
-        #uploadZone:hover,
-        #uploadZone.dragover {
-            border-color: rgba(0, 200, 255, 0.55);
-            background: rgba(0, 200, 255, 0.04);
-            box-shadow: inset 0 0 40px rgba(0, 200, 255, 0.04), 0 0 24px rgba(0, 200, 255, 0.08);
+            overflow: visible;
         }
 
         .upload-inner {
-            border: 1px dashed rgba(0, 200, 255, 0.25);
-            padding: 52px 24px;
-            text-align: center;
             pointer-events: none;
+            overflow: visible;
         }
 
-        #uploadZone.dragover .upload-inner {
-            border-color: rgba(0, 200, 255, 0.6);
+        .upload-inner svg {
+            width: 100%;
+            height: auto;
+            display: block;
+            overflow: visible;
+        }
+
+        #led-fill {
+            transition: fill 0.2s;
+        }
+
+        #led-group {
+            transition: filter 0.2s;
+        }
+
+        #uploadZone:hover #led-fill,
+        #uploadZone.dragover #led-fill {
+            fill: #00ff44;
+        }
+
+        #uploadZone:hover #led-group,
+        #uploadZone.dragover #led-group {
+            filter: drop-shadow(0 0 4px #00ff44);
         }
 
         .upload-icon {
@@ -380,22 +376,6 @@
 
         table { width: 100%; border-collapse: collapse; }
 
-        thead th {
-            font-family: var(--display);
-            font-size: 9px;
-            font-weight: 700;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--cyan);
-            padding: 10px 14px;
-            border-bottom: 1px solid var(--cyan-dim);
-            text-align: left;
-            background: var(--panel);
-            position: sticky;
-            top: 0;
-            z-index: 5;
-        }
-
         tbody tr {
             border-bottom: 1px solid rgba(0, 200, 255, 0.04);
             transition: background 0.15s;
@@ -462,32 +442,409 @@
         .d-none     { display: none !important; }
         .text-center { text-align: center; }
         .mt-reset   { margin-top: 28px; }
+
+        /* ── FOOTER ──────────────────────────────────────── */
+        .page-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 3;
+            padding: 10px 20px;
+            border-top: 1px solid var(--cyan-dim);
+            background: var(--bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            color: var(--text);
+        }
+
+        .footer-gh-link {
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+            transition: color 0.2s;
+        }
+
+        .footer-gh-link:hover {
+            color: var(--cyan);
+        }
+
+        /* ── FOLDER & HR PAPER ───────────────────────────── */
+        .folder {
+            position: relative;
+            margin-top: 28px;
+            background: linear-gradient(175deg, #C9943A 0%, #AD7B28 100%);
+            padding: 28px 20px 20px;
+            border-radius: 2px 4px 4px 4px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,220,120,0.2);
+        }
+
+        .folder::before {
+            content: '';
+            position: absolute;
+            top: -24px;
+            left: 0;
+            width: 130px;
+            height: 26px;
+            background: linear-gradient(to bottom, #B07A22 0%, #C9943A 100%);
+            border-radius: 4px 4px 0 0;
+            box-shadow: -1px -2px 5px rgba(0,0,0,0.3);
+        }
+
+        .hr-paper {
+            background: #F4EDD8;
+            color: #1A0E00;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.28), 0 0 0 1px rgba(0,0,0,0.07);
+            font-family: var(--mono);
+        }
+
+        .paper-header {
+            background: #EDE3C5;
+            padding: 18px 24px 14px;
+            border-bottom: 1.5px solid #B09060;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .paper-dept {
+            font-size: 9px;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: #8B6B3A;
+            margin-bottom: 5px;
+        }
+
+        .paper-title {
+            font-family: var(--display);
+            font-size: 22px;
+            font-weight: 900;
+            letter-spacing: 0.08em;
+            color: #1A0E00;
+            line-height: 1;
+        }
+
+        .paper-meta-row {
+            margin-top: 8px;
+            font-size: 9px;
+            color: #8B6B3A;
+            letter-spacing: 0.1em;
+        }
+
+        .paper-stamp {
+            font-family: var(--display);
+            font-size: 14px;
+            font-weight: 900;
+            color: rgba(150, 20, 20, 0.75);
+            border: 2.5px solid rgba(150, 20, 20, 0.6);
+            padding: 5px 10px;
+            transform: rotate(-8deg);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            white-space: nowrap;
+            margin-top: 6px;
+            flex-shrink: 0;
+        }
+
+        .profile-row {
+            display: flex;
+            gap: 0;
+            padding: 20px 24px;
+            border-bottom: 1.5px solid #C8B090;
+            align-items: flex-start;
+        }
+
+        .profile-photo-col {
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding-right: 24px;
+            border-right: 1px solid rgba(176,144,96,0.4);
+        }
+
+        .profile-photo {
+            width: 120px;
+            height: 155px;
+            object-fit: cover;
+            object-position: center top;
+            border: 2px solid #8B7355;
+            display: block;
+            filter: sepia(0.1) contrast(1.05);
+        }
+
+        .profile-caption {
+            font-size: 9px;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: #8B6B3A;
+            text-align: center;
+        }
+
+        .profile-fields {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-content: start;
+        }
+
+        .field-row {
+            padding: 10px 14px;
+            border-bottom: 1px solid rgba(176,144,96,0.25);
+            border-right: 1px solid rgba(176,144,96,0.25);
+        }
+
+        .field-row:nth-child(even) {
+            border-right: none;
+        }
+
+        .field-label {
+            font-size: 8px;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: #8B6B3A;
+            margin-bottom: 4px;
+        }
+
+        .field-value {
+            font-family: var(--display);
+            font-size: 15px;
+            font-weight: 700;
+            color: #1A0E00;
+            letter-spacing: 0.04em;
+        }
+
+        .field-bool-yes { color: #1A5C1A; }
+        .field-bool-no  { color: #7A1A1A; }
+
+        .field-section {
+            grid-column: 1 / -1;
+            padding: 7px 14px 5px;
+            background: #EDE3C5;
+            border-top: 1px solid rgba(176,144,96,0.35);
+            border-bottom: 1px solid rgba(176,144,96,0.25);
+        }
+
+        .field-section-label {
+            font-size: 8px;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            color: #8B6B3A;
+        }
+
+        .field-row--full {
+            grid-column: 1 / -1;
+            padding: 6px 14px;
+        }
+
+        .paper-records {
+            padding: 16px 24px 22px;
+        }
+
+        .paper-records-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .paper-section-title {
+            font-family: var(--display);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.25em;
+            color: #5C3A1A;
+            text-transform: uppercase;
+        }
+
+        .hr-paper .record-count   { color: #8B6B3A; }
+
+        .hr-paper .search-row {
+            background: rgba(0,0,0,0.04);
+            border-color: rgba(176,144,96,0.5);
+        }
+
+        .hr-paper .search-row:focus-within {
+            border-color: rgba(140,110,60,0.8);
+            box-shadow: 0 0 8px rgba(140,110,60,0.1);
+        }
+
+        .hr-paper .search-prompt        { color: #8B6B3A; }
+        .hr-paper #searchInput          { color: #1A0E00; caret-color: #8B6B3A; }
+        .hr-paper #searchInput::placeholder { color: rgba(100,70,30,0.4); }
+
+        .hr-paper table                 { color: #1A0E00; }
+
+        .hr-paper thead th {
+            color: #5C3A1A;
+            font-size: 9px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            background: #EDE3C5;
+            border-bottom: 1.5px solid #B09060;
+            padding: 7px 14px;
+            text-align: left;
+        }
+
+        .hr-paper tbody tr              { border-bottom: 1px solid rgba(176,144,96,0.18); }
+        .hr-paper tbody tr:hover        { background: rgba(176,144,96,0.08); }
+        .hr-paper tbody td:first-child  { color: #2D1A00; }
+        .hr-paper tbody td:last-child   { color: #6B3800; text-shadow: none; }
+
+        .hr-paper .table-scroll {
+            scrollbar-color: rgba(176,144,96,0.5) transparent;
+        }
+
+        .hr-paper .table-scroll::-webkit-scrollbar-thumb {
+            background: rgba(176,144,96,0.5);
+        }
+
+        .hr-paper #errorDisplay {
+            background: rgba(150,20,20,0.06);
+            border-color: rgba(150,20,20,0.3);
+            margin: 0 24px 16px;
+        }
+
+        .hr-paper #errorDisplay::before { border-color: rgba(150,20,20,0.5); }
+        .hr-paper #errorDisplay::after  { border-color: rgba(150,20,20,0.5); }
+        .hr-paper .error-head           { color: #8B0000; }
+        .hr-paper #errorMessage         { color: rgba(120,0,0,0.85); }
+
+        .folder-topbar {
+            display: flex;
+            justify-content: flex-end;
+            padding-bottom: 6px;
+        }
+
+        .btn-eject {
+            font-family: var(--display);
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.5);
+            background: linear-gradient(85deg, #242825 0%, #1B201C 100%);
+            border: 5px solid #000;
+            border-radius: 5pt;
+            padding: 6px 16px;
+            cursor: pointer;
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.6), 0 3px 6px rgba(0,0,0,0.5);
+            transition: background 0.15s, color 0.15s;
+        }
+
+        .btn-eject:hover {
+            background: linear-gradient(85deg, #2D342F 0%, #242825 100%);
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        .folder-reset {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .rel-portrait {
+            width: 28px;
+            height: 28px;
+            object-fit: cover;
+            object-position: center top;
+            border-radius: 50%;
+            border: 1.5px solid #8B7355;
+            vertical-align: middle;
+            margin-right: 6px;
+            filter: sepia(0.1) contrast(1.05);
+        }
     </style>
 </head>
 <body>
 <div class="page">
 
-    <!-- Status bar -->
-    <div class="status-bar">
-        <div class="status-dot"></div>
-        <span>SYSTEM ONLINE</span>
-        <span class="status-sep">|</span>
-        <span>PARSER READY</span>
-        <span class="status-right">SDN-CG-01 // SEC-LVL 3</span>
-    </div>
-
     <!-- Upload Zone -->
     <div id="uploadZone" class="panel">
         <div class="panel-label">
-            <span>// DATA INPUT</span>
+            <span>LENART Systems</span>
         </div>
         <div class="upload-inner">
-            <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" width="44" height="44" fill="currentColor" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M4.406 1.342A5.53 5.53 0 0 1 8 0c2.69 0 4.923 2 5.166 4.579C14.758 4.804 16 6.137 16 7.773 16 9.569 14.502 11 12.687 11H10a.5.5 0 0 1 0-1h2.688C13.979 10 15 8.988 15 7.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 2.825 10.328 1 8 1a4.53 4.53 0 0 0-2.941 1.1c-.757.652-1.153 1.438-1.153 2.055v.448l-.445.049C2.064 4.805 1 5.952 1 7.318 1 8.785 2.23 10 3.781 10H6a.5.5 0 0 1 0 1H3.781C1.708 11 0 9.366 0 7.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383z"/>
-                <path fill-rule="evenodd" d="M7.646 4.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V14.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3z"/>
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0" y="0" width="365.779" height="102.215" viewBox="0, 0, 365.779, 102.215">
+              <defs>
+                <linearGradient id="Gradient_1" gradientUnits="userSpaceOnUse" x1="360.031" y1="246.649" x2="391.04" y2="338.514">
+                  <stop offset="0" stop-color="#242825"/>
+                  <stop offset="1" stop-color="#1B201C"/>
+                </linearGradient>
+                <clipPath id="Clip_1">
+                  <path d="M551.425,244.974 C553.358,244.974 554.925,246.541 554.925,248.474 L554.925,336.689 C554.925,338.622 553.358,340.189 551.425,340.189 L199.646,340.189 C197.713,340.189 196.146,338.622 196.146,336.689 L196.146,248.474 C196.146,246.541 197.713,244.974 199.646,244.974 z"/>
+                </clipPath>
+                <filter id="InnerShadow_2">
+                  <feGaussianBlur in="SourceAlpha" stdDeviation="0"/>
+                  <feOffset dx="0" dy="0" result="offsetblur"/>
+                  <feFlood flood-color="#000000"/>
+                  <feComposite in2="offsetblur" operator="in"/>
+                </filter>
+                <linearGradient id="Gradient_2" gradientUnits="userSpaceOnUse" x1="327.387" y1="293.245" x2="423.32" y2="293.245">
+                  <stop offset="0" stop-color="#2D342F"/>
+                  <stop offset="0.156" stop-color="#1C211E"/>
+                  <stop offset="0.839" stop-color="#1C211E"/>
+                  <stop offset="0.983" stop-color="#151515"/>
+                </linearGradient>
+                <linearGradient id="Gradient_3" gradientUnits="userSpaceOnUse" x1="464.48" y1="296.982" x2="464.48" y2="316.677">
+                  <stop offset="0" stop-color="#2D2F2C"/>
+                  <stop offset="1" stop-color="#161A17"/>
+                </linearGradient>
+                <clipPath id="Clip_3">
+                  <path d="M487.575,295.482 C489.508,295.482 491.075,297.049 491.075,298.982 L491.075,314.677 C491.075,316.61 489.508,318.177 487.575,318.177 L441.385,318.177 C439.452,318.177 437.885,316.61 437.885,314.677 L437.885,298.982 C437.885,297.049 439.452,295.482 441.385,295.482 z"/>
+                </clipPath>
+                <filter id="InnerShadow_4">
+                  <feGaussianBlur in="SourceAlpha" stdDeviation="2"/>
+                  <feOffset dx="0" dy="0" result="offsetblur"/>
+                  <feFlood flood-color="#000000"/>
+                  <feComposite in2="offsetblur" operator="in"/>
+                </filter>
+                <linearGradient id="Gradient_4" gradientUnits="userSpaceOnUse" x1="375.782" y1="254.233" x2="375.782" y2="289.175">
+                  <stop offset="0.724" stop-color="#000000"/>
+                  <stop offset="0.984" stop-color="#1C1C1C"/>
+                </linearGradient>
+              </defs>
+              <g id="Layer_2" transform="translate(-192.146, -240.974)">
+                <g>
+                  <path d="M199.646,246.474 L551.425,246.474 C552.53,246.474 553.425,247.369 553.425,248.474 L553.425,336.689 C553.425,337.794 552.53,338.689 551.425,338.689 L199.646,338.689 C198.541,338.689 197.646,337.794 197.646,336.689 L197.646,248.474 C197.646,247.369 198.541,246.474 199.646,246.474" fill="url(#Gradient_1)"/>
+                  <path d="M199.646,246.474 L551.425,246.474 C552.53,246.474 553.425,247.369 553.425,248.474 L553.425,336.689 C553.425,337.794 552.53,338.689 551.425,338.689 L199.646,338.689 C198.541,338.689 197.646,337.794 197.646,336.689 L197.646,248.474 C197.646,247.369 198.541,246.474 199.646,246.474" fill-opacity="0" stroke="#000000" stroke-width="3"/>
+                  <path d="M195.146,243.974 L555.925,243.974 L555.925,341.189 L195.146,341.189 z M551.425,244.974 L199.646,244.974 C197.713,244.974 196.146,246.541 196.146,248.474 L196.146,336.689 C196.146,338.622 197.713,340.189 199.646,340.189 L551.425,340.189 C553.358,340.189 554.925,338.622 554.925,336.689 L554.925,248.474 C554.925,246.541 553.358,244.974 551.425,244.974 z" clip-path="url(#Clip_1)" filter="url(#InnerShadow_2)" fill="rgba(0,0,0,1)"/>
+                </g>
+                <path d="M329.615,283.019 L421.091,283.019 C422.322,283.019 423.32,283.914 423.32,285.019 L423.32,301.47 C423.32,302.575 422.322,303.47 421.091,303.47 L329.615,303.47 C328.384,303.47 327.387,302.575 327.387,301.47 L327.387,285.019 C327.387,283.914 328.384,283.019 329.615,283.019 z" fill="url(#Gradient_2)"/>
+                <g id="led-group">
+                  <path id="led-fill" d="M284.779,306.194 L303.015,306.194 C304.12,306.194 305.015,307.089 305.015,308.194 L305.015,312.135 C305.015,313.24 304.12,314.135 303.015,314.135 L284.779,314.135 C283.674,314.135 282.779,313.24 282.779,312.135 L282.779,308.194 C282.779,307.089 283.674,306.194 284.779,306.194 z" fill="#0A3500"/>
+                  <path d="M284.779,306.194 L303.015,306.194 C304.12,306.194 305.015,307.089 305.015,308.194 L305.015,312.135 C305.015,313.24 304.12,314.135 303.015,314.135 L284.779,314.135 C283.674,314.135 282.779,313.24 282.779,312.135 L282.779,308.194 C282.779,307.089 283.674,306.194 284.779,306.194 z" fill-opacity="0" stroke="#000000" stroke-width="3"/>
+                </g>
+                <g>
+                  <path d="M441.385,296.982 L487.575,296.982 C488.68,296.982 489.575,297.877 489.575,298.982 L489.575,314.677 C489.575,315.781 488.68,316.677 487.575,316.677 L441.385,316.677 C440.281,316.677 439.385,315.781 439.385,314.677 L439.385,298.982 C439.385,297.877 440.281,296.982 441.385,296.982 z" fill="url(#Gradient_3)"/>
+                  <path d="M441.385,296.982 L487.575,296.982 C488.68,296.982 489.575,297.877 489.575,298.982 L489.575,314.677 C489.575,315.781 488.68,316.677 487.575,316.677 L441.385,316.677 C440.281,316.677 439.385,315.781 439.385,314.677 L439.385,298.982 C439.385,297.877 440.281,296.982 441.385,296.982 z" fill-opacity="0" stroke="#000000" stroke-width="3"/>
+                  <path d="M432.885,290.482 L496.075,290.482 L496.075,323.177 L432.885,323.177 z M487.575,295.482 L441.385,295.482 C439.452,295.482 437.885,297.049 437.885,298.982 L437.885,314.677 C437.885,316.61 439.452,318.177 441.385,318.177 L487.575,318.177 C489.508,318.177 491.075,316.61 491.075,314.677 L491.075,298.982 C491.075,297.049 489.508,295.482 487.575,295.482 z" clip-path="url(#Clip_3)" filter="url(#InnerShadow_4)" fill="rgba(0,0,0,0.75)"/>
+                </g>
+                <path d="M228.164,289.175 L523.399,289.175 C524.504,289.175 525.399,288.28 525.399,287.175 L525.399,264.81 C525.399,263.705 524.504,262.81 523.399,262.81 L422.795,262.81 L422.795,256.233 C422.795,255.128 421.9,254.233 420.795,254.233 L328.862,254.233 C327.757,254.233 326.862,255.128 326.862,256.233 L326.862,262.81 L228.164,262.81 C227.059,262.81 226.164,263.705 226.164,264.81 L226.164,287.175 C226.164,288.28 227.059,289.175 228.164,289.175" fill="url(#Gradient_4)"/>
+              </g>
+              <!-- Post-it note -->
+              <g transform="translate(15, 86) rotate(5, 42, 42)">
+                <!-- Drop shadow (body shape offset) -->
+                <path d="M 3,4 L 87,4 L 87,68 Q 77,78 67,88 L 3,88 Z" fill="rgba(0,0,0,0.28)"/>
+                <!-- Main body with curl cutout -->
+                <path d="M 0,0 L 84,0 L 84,64 Q 74,74 64,84 L 0,84 Z" fill="#f5e84b"/>
+                <!-- Top strip -->
+                <path d="M 0,0 L 84,0 L 84,6 L 0,6 Z" fill="#e8d93a"/>
+                <!-- Depth shadow near curl -->
+                <path d="M 84,64 Q 74,74 64,84 L 72,84 L 84,72 Z" fill="rgba(0,0,0,0.13)"/>
+                <!-- Curl underside -->
+                <path d="M 84,64 Q 74,74 64,84 L 84,84 Z" fill="#c8b830"/>
+                <!-- Text -->
+                <text x="38" y="40" font-family="'Caveat', cursive" font-size="15" fill="#2a1f00" text-anchor="middle">SaveSlot</text>
+                <text x="34" y="60" font-family="'Caveat', cursive" font-size="15" fill="#2a1f00" text-anchor="middle">file here</text>
+              </g>
             </svg>
-            <div class="upload-title">Drop Save File to Initialize</div>
-            <div class="upload-sub">Accepts: Dispatch SaveSlot &nbsp;(.sav)</div>
         </div>
         <input type="file" id="fileInput" class="d-none" accept=".sav">
     </div>
@@ -495,65 +852,106 @@
     <!-- File Info Section -->
     <div id="fileInfoSection" class="d-none">
 
-        <!-- Metadata -->
-        <div class="panel">
-            <div class="panel-label">// File Metadata</div>
-            <div class="info-grid">
-                <div class="info-cell">
-                    <div class="info-key">File Name</div>
-                    <div class="info-val" id="fileName">—</div>
+        <div class="folder-topbar">
+            <button class="btn-eject" id="ejectBtn">&#x23CF; Eject</button>
+        </div>
+
+        <div class="folder">
+            <div class="hr-paper">
+
+                <!-- Header -->
+                <div class="paper-header">
+                    <div>
+                        <div class="paper-dept">SDN Records Department : Personnel Division</div>
+                        <div class="paper-title">PERSONNEL FILE</div>
+                        <div class="paper-meta-row">
+                            FILE: <span id="fileName">—</span>&ensp;&middot;&ensp;SIZE: <span id="fileSize">—</span>
+                        </div>
+                    </div>
+                    <div class="paper-stamp">Confidential</div>
                 </div>
-                <div class="info-cell">
-                    <div class="info-key">File Size</div>
-                    <div class="info-val" id="fileSize">—</div>
+
+                <!-- Profile -->
+                <div class="profile-row">
+                    <div class="profile-photo-col">
+                        <img src="assets/img/rob.jpg" class="profile-photo" alt="Robert">
+                        <div class="profile-caption">R. Robertson III</div>
+                    </div>
+                    <div class="profile-fields">
+                        <div class="field-row">
+                            <div class="field-label">Mentor Count</div>
+                            <div class="field-value" id="pf-mentor-count">—</div>
+                        </div>
+                        <div class="field-row">
+                            <div class="field-label">Hero / Antihero</div>
+                            <div class="field-value" id="pf-hero-antihero">—</div>
+                        </div>
+                        <div class="field-row">
+                            <div class="field-label">Terminations</div>
+                            <div class="field-value" id="pf-cut-sonar">—</div>
+                        </div>
+                        <div class="field-row">
+                            <div class="field-label">New Hires</div>
+                            <div class="field-value" id="pf-waterboy">—</div>
+                        </div>
+                        <div class="field-section">
+                            <div class="field-label">Interoffice Relationships</div>
+                        </div>
+                        <div class="field-row field-row--full">
+                            <div class="field-value" id="pf-relationship">—</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="info-cell">
-                    <div class="info-key">Engine Version</div>
-                    <div class="info-val" id="engineVersion">—</div>
+
+                <!-- Error -->
+                <div id="errorDisplay" class="d-none" role="alert">
+                    <div class="error-head">!! Parse Error</div>
+                    <div id="errorMessage"></div>
                 </div>
-                <div class="info-cell">
-                    <div class="info-key">Save Version</div>
-                    <div class="info-val" id="saveVersion">—</div>
+
+                <!-- Records -->
+                <div class="paper-records">
+                    <div class="paper-records-header">
+                        <span class="paper-section-title">Career Records</span>
+                        <span class="record-count">Records: <span id="varCount">0</span></span>
+                    </div>
+                    <div class="search-row">
+                        <span class="search-prompt">&gt;_</span>
+                        <input type="text" id="searchInput" placeholder="Filter stats...">
+                    </div>
+                    <div class="table-scroll">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th style="width:55%;">Stat Name</th>
+                                    <th style="width:45%;">Value</th>
+                                </tr>
+                            </thead>
+                            <tbody id="variablesTable"></tbody>
+                        </table>
+                    </div>
                 </div>
+
             </div>
         </div>
 
-        <!-- Error -->
-        <div id="errorDisplay" class="d-none" role="alert">
-            <div class="error-head">!! Parse Error</div>
-            <div id="errorMessage"></div>
-        </div>
-
-        <!-- Stats -->
-        <div class="panel">
-            <div class="panel-label">
-                <span>// Career Stats</span>
-                <span class="record-count">Records: <span id="varCount">0</span></span>
-            </div>
-            <div class="search-row">
-                <span class="search-prompt">&gt;_</span>
-                <input type="text" id="searchInput" placeholder="Filter stats...">
-            </div>
-            <div class="table-scroll">
-                <table>
-                    <thead>
-                        <tr>
-                            <th style="width:55%;">Stat Name</th>
-                            <th style="width:45%;">Value</th>
-                        </tr>
-                    </thead>
-                    <tbody id="variablesTable"></tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Reset -->
-        <div class="text-center mt-reset">
+        <div class="folder-reset">
             <button class="btn-console" id="resetBtn">Load New File</button>
         </div>
 
     </div>
+
+    </div>
 </div>
+
+<footer class="page-footer">
+    <span>This is a fan-made utility. I am in no way affiliated with AdHoc Studios.</span>
+    <a href="https://github.com/russiancatfood/sdn_records_department" target="_blank" rel="noopener" class="footer-gh-link" aria-label="View source on GitHub">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+        </svg>
+    </a>
+</footer>
 
 <script type="module">
     import { SavReader } from './gvas_parser/sav_reader.js';
@@ -563,14 +961,17 @@
     const fileInfoSection= document.getElementById('fileInfoSection');
     const fileNameEl     = document.getElementById('fileName');
     const fileSizeEl     = document.getElementById('fileSize');
-    const engineVersionEl= document.getElementById('engineVersion');
-    const saveVersionEl  = document.getElementById('saveVersion');
     const errorDisplay   = document.getElementById('errorDisplay');
     const errorMessage   = document.getElementById('errorMessage');
     const varCount       = document.getElementById('varCount');
     const variablesTable = document.getElementById('variablesTable');
     const searchInput    = document.getElementById('searchInput');
     const resetBtn       = document.getElementById('resetBtn');
+    const ejectBtn       = document.getElementById('ejectBtn');
+
+    const profileVars = {
+        'NV_RobertMentorCounter': 'pf-mentor-count',
+    };
 
     let allStats = {};
 
@@ -603,50 +1004,182 @@
         return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
     }
 
+    function blinkLED(duration) {
+        return new Promise(resolve => {
+            const ledFill  = document.getElementById('led-fill');
+            const ledGroup = document.getElementById('led-group');
+            let handle;
+
+            function tick() {
+                const on = Math.random() > 0.35;
+                ledFill.style.fill    = on ? '#00ff44' : '#0A3500';
+                ledGroup.style.filter = on ? 'drop-shadow(0 0 4px #00ff44)' : 'none';
+                handle = setTimeout(tick, 60 + Math.random() * 180);
+            }
+
+            tick();
+
+            setTimeout(() => {
+                clearTimeout(handle);
+                ledFill.style.fill    = '';
+                ledGroup.style.filter = '';
+                resolve();
+            }, duration);
+        });
+    }
+
     function processFile(file) {
         fileNameEl.textContent = file.name;
         fileSizeEl.textContent = formatFileSize(file.size);
         errorDisplay.classList.add('d-none');
-        fileInfoSection.classList.remove('d-none');
-        uploadZone.classList.add('d-none');
 
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            try {
-                const savReader = new SavReader(e.target.result);
-                const properties = savReader.readWholeBuffer();
+        const blinkPromise = blinkLED(2000);
 
-                const header = properties[0];
-                engineVersionEl.textContent = header?.engine_version ?? 'N/A';
-                saveVersionEl.textContent   = header?.save_game_version ?? 'N/A';
+        const parsePromise = new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const savReader  = new SavReader(e.target.result);
+                    const properties = savReader.readWholeBuffer();
 
-                // Extract stats — same logic as test_parser.js
-                allStats = {};
-                for (const prop of properties) {
-                    if (prop.type === "ArrayProperty" && prop.name === "SceneSnapshots") {
-                        for (let i = 0; i < prop.value.length; i++) {
-                            for (let j = 0; j < prop.value[i][1].value.length; j++) {
-                                const name  = prop.value[i][1].value[j][0];
-                                const value = prop.value[i][1].value[j][1][0].value;
-                                if (name.startsWith("BV_") || name.startsWith("NV_")) {
-                                    const view = new DataView(new Uint8Array(value).buffer);
-                                    const converted = parseInt(view.getFloat32(4, true));
-                                    if (allStats[name] == null || converted > allStats[name]) {
-                                        allStats[name] = converted;
+                    const header = properties[0];
+                    const stats  = {};
+
+                    for (const prop of properties) {
+                        if (prop.type === "ArrayProperty" && prop.name === "SceneSnapshots") {
+                            for (let i = 0; i < prop.value.length; i++) {
+                                for (let j = 0; j < prop.value[i][1].value.length; j++) {
+                                    const name  = prop.value[i][1].value[j][0];
+                                    const value = prop.value[i][1].value[j][1][0].value;
+                                    if (name.startsWith("BV_") || name.startsWith("NV_")) {
+                                        const view      = new DataView(new Uint8Array(value).buffer);
+                                        const converted = parseInt(view.getFloat32(4, true));
+                                        if (stats[name] == null || converted > stats[name]) {
+                                            stats[name] = converted;
+                                        }
                                     }
                                 }
                             }
                         }
                     }
-                }
 
-                renderStats('');
-            } catch (err) {
+                    resolve({ header, stats });
+                } catch (err) {
+                    reject(err);
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        });
+
+        Promise.allSettled([blinkPromise, parsePromise]).then(([, parseResult]) => {
+            uploadZone.classList.add('d-none');
+            fileInfoSection.classList.remove('d-none');
+
+            if (parseResult.status === 'rejected') {
+                renderProfile({});
                 errorDisplay.classList.remove('d-none');
-                errorMessage.textContent = err.message;
+                errorMessage.textContent = parseResult.reason.message;
+            } else {
+                const { header, stats } = parseResult.value;
+                allStats = stats;
+                renderProfile(stats);
+                renderStats('');
             }
-        };
-        reader.readAsArrayBuffer(file);
+        });
+    }
+
+    function renderProfile(stats) {
+        for (const [key, elId] of Object.entries(profileVars)) {
+            const el = document.getElementById(elId);
+            if (!el) continue;
+            const val = stats[key];
+            if (val == null) {
+                el.textContent = '—';
+                el.className = 'field-value';
+            } else if (key.startsWith('BV_')) {
+                el.textContent = val ? 'YES' : 'NO';
+                el.className = 'field-value ' + (val ? 'field-bool-yes' : 'field-bool-no');
+            } else {
+                el.textContent = val;
+                el.className = 'field-value';
+            }
+        }
+
+        const waterboyEl = document.getElementById('pf-waterboy');
+        if (waterboyEl) {
+            const val = stats['BV_Chose Waterboy'];
+            waterboyEl.textContent = val == null ? '—' : (val ? 'Waterboy' : 'Phenomaman');
+            waterboyEl.className = 'field-value';
+        }
+
+        const cutSonarEl = document.getElementById('pf-cut-sonar');
+        if (cutSonarEl) {
+            const val = stats['BV_Cut Sonar'];
+            let text = val == null ? '—' : (val ? 'Sonar' : 'Coupé');
+            if (stats["BV_She's gone"]) text += ', Invisigal';
+            cutSonarEl.textContent = text;
+            cutSonarEl.className = 'field-value';
+        }
+
+        const heroAntiEl = document.getElementById('pf-hero-antihero');
+        if (heroAntiEl) {
+            const hero = stats['NV_Robert Hero'];
+            const anti = stats['NV_Robert Antihero'];
+            heroAntiEl.textContent = `${hero ?? '—'} / ${anti ?? '—'}`;
+            heroAntiEl.className = 'field-value';
+        }
+
+        const relEl = document.getElementById('pf-relationship');
+        if (relEl) {
+            const status = relationshipStatus(stats) ?? '—';
+            relEl.className = 'field-value';
+            relEl.innerHTML = '';
+            const imgs = [];
+            if (status === 'Blonde Blazer (Mandy)' || status === 'Under HR Review') {
+                const img = document.createElement('img');
+                img.src = 'assets/img/bb.jpg';
+                img.className = 'rel-portrait';
+                img.alt = 'Blonde Blazer';
+                imgs.push(img);
+            }
+            if (status === 'Invisigal (Courtney)' || status === 'Under HR Review') {
+                const img = document.createElement('img');
+                img.src = 'assets/img/visi.jpg';
+                img.className = 'rel-portrait';
+                img.alt = 'Invisigal';
+                imgs.push(img);
+            }
+            imgs.forEach(img => relEl.appendChild(img));
+            relEl.appendChild(document.createTextNode(status));
+        }
+    }
+
+    function sanitizeName(name) {
+        return name
+            .replace(/^(BV_|NV_)/, '')
+            .replace(/_/g, ' ')
+            .replace(/([A-Z]+)([A-Z][a-z])/g, '$1 $2')
+            .replace(/([a-z])([A-Z])/g, '$1 $2')
+            .trim();
+    }
+
+    function relationshipStatus(stats) {
+        const bb = (stats["BV_104 Kissed Blazer"] && !(stats["BV_BackedOutBlazer"]));
+        const visi = ((stats["NV_SweetExitCounter"] >= 10) && stats["BV_Leaned In"]);
+
+        if(bb && !visi){
+            return "Blonde Blazer (Mandy)";
+        }
+        if(!bb && visi){
+            return "Invisigal (Courtney)";
+        }
+        if(!bb && !visi){
+            return "None";
+        }
+        if(bb && visi){
+            return "Under HR Review";
+        }
+
     }
 
     function renderStats(filter) {
@@ -656,13 +1189,13 @@
         );
         varCount.textContent = entries.length;
         variablesTable.innerHTML = entries
-            .map(([name, value]) => `<tr><td>${name}</td><td>${value}</td></tr>`)
+            .map(([name, value]) => `<tr><td title="${name}">${sanitizeName(name)}</td><td>${value}</td></tr>`)
             .join('');
     }
 
     searchInput.addEventListener('input', () => renderStats(searchInput.value));
 
-    resetBtn.addEventListener('click', () => {
+    function resetToUpload() {
         fileInput.value = '';
         fileInfoSection.classList.add('d-none');
         uploadZone.classList.remove('d-none');
@@ -670,7 +1203,10 @@
         searchInput.value = '';
         variablesTable.innerHTML = '';
         allStats = {};
-    });
+    }
+
+    resetBtn.addEventListener('click', resetToUpload);
+    ejectBtn.addEventListener('click', resetToUpload);
 </script>
 </body>
 </html>
