@@ -269,7 +269,7 @@
             bottom: calc(100% + 8px);
             right: 0;
             background: #F3E6D4;
-            border: 4px solid #BDB3A4;
+            border: 5px solid #BDB3A4;
             outline: 1px solid #000;
             box-shadow: inset 0 0 0 1px #000, 0 6px 20px rgba(0,0,0,0.5);
             padding: 14px 16px 12px;
@@ -330,6 +330,34 @@
 
         .savepath-popup-close:hover {
             opacity: 1;
+        }
+
+        /* ── PERMALINK POPUP ─────────────────────────────── */
+        .permalink-wrap {
+            position: relative;
+            margin-right: 8px;
+        }
+
+        .permalink-popup {
+            display: none;
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            background: #F3E6D4;
+            border: 5px solid #BDB3A4;
+            outline: 1px solid #000;
+            box-shadow: inset 0 0 0 1px #000, 0 6px 20px rgba(0,0,0,0.5);
+            padding: 14px 16px 12px;
+            text-align: left;
+            font-size: 11px;
+            color: #2D1A00;
+            z-index: 10;
+            min-width: 290px;
+            max-width: 480px;
+        }
+
+        .permalink-popup.is-open {
+            display: block;
         }
 
         /* ── INFO GRID ───────────────────────────────────── */
@@ -952,6 +980,14 @@
     <div id="fileInfoSection" class="d-none">
 
         <div class="folder-topbar">
+            <div class="permalink-wrap">
+                <button class="btn-eject" id="linkBtn">&#x1F517; Link</button>
+                <div class="permalink-popup" id="permalinkPopup">
+                    <button class="savepath-popup-close" id="permalinkClose">&#x2715;</button>
+                    <div class="savepath-popup-label">Permalink</div>
+                    <code class="savepath-code" id="permalinkUrl"></code>
+                </div>
+            </div>
             <button class="btn-eject" id="ejectBtn">&#x23CF; Eject</button>
         </div>
 
@@ -1033,11 +1069,6 @@
 
             </div>
         </div>
-
-        <div class="folder-reset">
-            <button class="btn-console" id="resetBtn">Load New File</button>
-        </div>
-
     </div>
 
     </div>
@@ -1054,6 +1085,7 @@
 
 <script type="module">
     import { SavReader } from './gvas_parser/sav_reader.js';
+    import { stats_to_hash_map } from './gvas_parser/permalink_map.js';
 
     const uploadZone     = document.getElementById('uploadZone');
     const fileInput      = document.getElementById('fileInput');
@@ -1065,8 +1097,14 @@
     const varCount       = document.getElementById('varCount');
     const variablesTable = document.getElementById('variablesTable');
     const searchInput    = document.getElementById('searchInput');
-    const resetBtn       = document.getElementById('resetBtn');
     const ejectBtn       = document.getElementById('ejectBtn');
+    const linkBtn        = document.getElementById('linkBtn');
+    const permalinkPopup = document.getElementById('permalinkPopup');
+    const permalinkClose = document.getElementById('permalinkClose');
+    const permalinkUrl   = document.getElementById('permalinkUrl');
+    const savepathHint   = document.getElementById('savepathHint');
+    const savepathPopup  = document.getElementById('savepathPopup');
+    const savepathClose  = document.getElementById('savepathClose');
 
     const profileVars = {
         'NV_RobertMentorCounter': 'pf-mentor-count',
@@ -1172,6 +1210,7 @@
 
         Promise.allSettled([blinkPromise, parsePromise]).then(([, parseResult]) => {
             uploadZone.classList.add('d-none');
+            savepathHint.classList.add('d-none');
             fileInfoSection.classList.remove('d-none');
 
             if (parseResult.status === 'rejected') {
@@ -1298,18 +1337,77 @@
         fileInput.value = '';
         fileInfoSection.classList.add('d-none');
         uploadZone.classList.remove('d-none');
+        linkBtn.classList.remove('d-none');
         errorDisplay.classList.add('d-none');
         searchInput.value = '';
         variablesTable.innerHTML = '';
         allStats = {};
+        savepathHint.classList.remove('d-none');
+        history.replaceState(null, '', window.location.pathname);
     }
 
-    resetBtn.addEventListener('click', resetToUpload);
+    function loadFromPermalink() {
+        const encoded = new URLSearchParams(window.location.search).get('s');
+        if (!encoded) return;
+
+        let decoded;
+        try { decoded = atob(encoded); } catch { return; }
+
+        const reverseMap = {};
+        for (const [fullName, shortCode] of Object.entries(stats_to_hash_map)) {
+            reverseMap[shortCode] = fullName;
+        }
+
+        const stats = {};
+        for (const pair of decoded.split('|')) {
+            const colon = pair.indexOf(':');
+            if (colon === -1) continue;
+            const shortCode = pair.slice(0, colon);
+            const value     = pair.slice(colon + 1);
+            const fullName  = reverseMap[shortCode];
+            if (fullName != null) stats[fullName] = Number(value);
+        }
+
+        if (!Object.keys(stats).length) return;
+
+        allStats = stats;
+        fileNameEl.textContent = 'permalink';
+        fileSizeEl.textContent = '—';
+        uploadZone.classList.add('d-none');
+        savepathHint.classList.add('d-none');
+        linkBtn.classList.add('d-none');
+        fileInfoSection.classList.remove('d-none');
+        renderProfile(stats);
+        renderStats('');
+    }
+
+    loadFromPermalink();
+
+    function generatePermalink(stats) {
+        const parts = [];
+        for (const [fullName, shortCode] of Object.entries(stats_to_hash_map)) {
+            if (stats[fullName] != null) {
+                parts.push(`${shortCode}:${stats[fullName]}`);
+            }
+        }
+        const encoded = btoa(parts.join('|'));
+        return window.location.origin + window.location.pathname + '?s=' + encoded;
+    }
+
     ejectBtn.addEventListener('click', resetToUpload);
 
-    const savepathHint  = document.getElementById('savepathHint');
-    const savepathPopup = document.getElementById('savepathPopup');
-    const savepathClose = document.getElementById('savepathClose');
+    linkBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        permalinkUrl.textContent = generatePermalink(allStats);
+        permalinkPopup.classList.toggle('is-open');
+    });
+
+    permalinkClose.addEventListener('click', (e) => {
+        e.stopPropagation();
+        permalinkPopup.classList.remove('is-open');
+    });
+
+    permalinkPopup.addEventListener('click', (e) => e.stopPropagation());
 
     savepathHint.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -1323,7 +1421,10 @@
 
     savepathPopup.addEventListener('click', (e) => e.stopPropagation());
 
-    document.addEventListener('click', () => savepathPopup.classList.remove('is-open'));
+    document.addEventListener('click', () => {
+        savepathPopup.classList.remove('is-open');
+        permalinkPopup.classList.remove('is-open');
+    });
 </script>
 </body>
 </html>
