@@ -5,6 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SDN Record Department</title>
     <link rel="icon" type="image/png" href="/favicon.ico">
+
+    <!-- OpenGraph -->
+    <meta property="og:type"        content="website">
+    <meta property="og:url"         content="https://russiancatfood.github.io/sdn_records_department/">
+    <meta property="og:title"       content="SDN Records Department — Personnel File">
+    <meta property="og:description" content="Upload your Dispatch save file to read your Personnel File: career milestones, interpersonal records, and full stat history.">
+    <meta property="og:image"       content="https://russiancatfood.github.io/sdn_records_department/assets/og_preview.svg">
+    <meta property="og:image:width"  content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card"        content="summary_large_image">
+    <meta name="twitter:title"       content="SDN Records Department — Personnel File">
+    <meta name="twitter:description" content="Upload your Dispatch save file to read your Personnel File: career milestones, interpersonal records, and full stat history.">
+    <meta name="twitter:image"       content="https://russiancatfood.github.io/sdn_records_department/assets/og_preview.svg">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Caveat:wght@400;700&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -21,11 +36,14 @@
             --green:        #00ff9f;
             --red:          #ff3c3c;
             --red-dim:      rgba(255, 60, 60, 0.12);
-            --text:         #7aa8c0;
+            --text:         #b7d6e7;
             --text-bright:  #cce8f4;
+            --bg-panel:     #faf7f2;
+            --panel-border: #bdb3a4;
+            --text-panel:   #140c00;
             --mono:         'Share Tech Mono', 'Courier New', monospace;
             --display:      'Orbitron', sans-serif;
-            --text:         'Roboto', sans-serif;
+            --label:      'Roboto', sans-serif;
         }
 
         body {
@@ -250,9 +268,9 @@
         }
 
         .upload-savepath-hint {
-            font-size: 11px;
-            color: var(--text);
-            opacity: 0.45;
+            font-size: 12px;
+            color: var(--text-bright);
+            opacity: 0.75;
             letter-spacing: 0.08em;
             cursor: pointer;
             text-decoration: underline dotted;
@@ -261,7 +279,7 @@
         }
 
         .upload-savepath-hint:hover {
-            opacity: 0.75;
+            opacity: 1.0;
         }
 
         .savepath-popup {
@@ -269,14 +287,14 @@
             position: absolute;
             bottom: calc(100% + 8px);
             right: 0;
-            background: #F3E6D4;
-            border: 5px solid #BDB3A4;
+            background: var(--bg-panel);
+            border: 5px solid var(--panel-border);
             outline: 1px solid #000;
             box-shadow: inset 0 0 0 1px #000, 0 6px 20px rgba(0,0,0,0.5);
             padding: 14px 16px 12px;
             text-align: left;
             font-size: 11px;
-            color: #2D1A00;
+            color: var(--text-panel);
             z-index: 10;
             min-width: 290px;
             max-width: 420px;
@@ -290,7 +308,7 @@
             font-size: 9px;
             letter-spacing: 0.2em;
             text-transform: uppercase;
-            color: #8B6B3A;
+            color: var(--text-panel);
             margin-bottom: 8px;
         }
 
@@ -299,7 +317,7 @@
             font-family: var(--mono);
             font-size: 11px;
             color: #5C3A1A;
-            background: #EDE3C5;
+            background: var(--bg-panel);
             border: 1px solid #B09060;
             padding: 8px 10px;
             margin-bottom: 8px;
@@ -310,7 +328,7 @@
 
         .savepath-popup-note {
             font-size: 10px;
-            color: #8B6B3A;
+            color: var(--text-panel);
             letter-spacing: 0.05em;
         }
 
@@ -320,7 +338,7 @@
             right: 8px;
             background: none;
             border: none;
-            color: #8B6B3A;
+            color: var(--text-panel);
             cursor: pointer;
             font-size: 13px;
             opacity: 0.5;
@@ -576,7 +594,7 @@
             align-items: center;
             justify-content: center;
             gap: 12px;
-            font-size: 10px;
+            font-size: 12px;
             letter-spacing: 0.1em;
             color: var(--text);
         }
@@ -616,14 +634,14 @@
         }
 
         .hr-paper {
-            background: #F4EDD8;
+            background: #fff;
             color: #1A0E00;
             box-shadow: 0 2px 10px rgba(0,0,0,0.28), 0 0 0 1px rgba(0,0,0,0.07);
             font-family: var(--mono);
         }
 
         .paper-header {
-            background: #EDE3C5;
+            background: var(--bg-panel);
             padding: 18px 24px 14px;
             border-bottom: 1.5px solid #B09060;
             display: flex;
@@ -636,7 +654,7 @@
             font-size: 9px;
             letter-spacing: 0.3em;
             text-transform: uppercase;
-            color: #8B6B3A;
+            color: var(--text-panel);
             margin-bottom: 5px;
         }
 
@@ -652,7 +670,7 @@
         .paper-meta-row {
             margin-top: 8px;
             font-size: 9px;
-            color: #8B6B3A;
+            color: var(--text-panel);
             letter-spacing: 0.1em;
         }
 
@@ -686,7 +704,6 @@
             align-items: center;
             gap: 8px;
             padding-right: 24px;
-            border-right: 1px solid rgba(176,144,96,0.4);
         }
 
         .profile-photo {
@@ -703,7 +720,7 @@
             font-size: 9px;
             letter-spacing: 0.25em;
             text-transform: uppercase;
-            color: #8B6B3A;
+            color: var(--text-panel);
             text-align: center;
         }
 
@@ -717,7 +734,7 @@
         .field-row {
             padding: 10px 14px;
             border-bottom: 1px solid rgba(176,144,96,0.25);
-            border-right: 1px solid rgba(176,144,96,0.25);
+            border-left: 1px solid rgba(176,144,96,0.25);
         }
 
         .field-row:nth-child(even) {
@@ -730,12 +747,12 @@
             text-transform: uppercase;
             color: #1A0E00;
             margin-bottom: 4px;
-            font-family: var(--text);
+            font-family: var(--label);
         }
 
         .field-value {
             font-family: var(--display);
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 700;
             color: #1A0E00;
             letter-spacing: 0.04em;
@@ -747,16 +764,17 @@
         .field-section {
             grid-column: 1 / -1;
             padding: 7px 14px 5px;
-            background: #EDE3C5;
+            background: var(--bg-panel);
             border-top: 1px solid rgba(176,144,96,0.35);
             border-bottom: 1px solid rgba(176,144,96,0.25);
+            border-left: 1px solid rgba(176,144,96,0.35);
         }
 
         .field-section-label {
             font-size: 8px;
             letter-spacing: 0.28em;
             text-transform: uppercase;
-            color: #8B6B3A;
+            color: var(--text-panel);
         }
 
         .field-row--full {
@@ -772,7 +790,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            margin: 10px;
         }
 
         .paper-section-title {
@@ -784,7 +802,7 @@
             text-transform: uppercase;
         }
 
-        .hr-paper .record-count   { color: #8B6B3A; }
+        .hr-paper .record-count   { color: var(--text-panel); }
 
         .hr-paper .search-row {
             background: rgba(0,0,0,0.04);
@@ -796,8 +814,8 @@
             box-shadow: 0 0 8px rgba(140,110,60,0.1);
         }
 
-        .hr-paper .search-prompt        { color: #8B6B3A; }
-        .hr-paper #searchInput          { color: #1A0E00; caret-color: #8B6B3A; }
+        .hr-paper .search-prompt        { color: var(--text-panel); }
+        .hr-paper #searchInput          { color: #1A0E00; caret-color: var(--text-panel); }
         .hr-paper #searchInput::placeholder { color: rgba(100,70,30,0.4); }
 
         .hr-paper table                 { color: #1A0E00; }
@@ -807,7 +825,7 @@
             font-size: 9px;
             letter-spacing: 0.18em;
             text-transform: uppercase;
-            background: #EDE3C5;
+            background: var(--bg-panel);
             border-bottom: 1.5px solid #B09060;
             padding: 7px 14px;
             text-align: left;
@@ -879,6 +897,222 @@
             vertical-align: middle;
             margin-right: 6px;
             filter: sepia(0.1) contrast(1.05);
+        }
+
+        .paper-tabs {
+            display: flex;
+            border-bottom: 1.5px solid #B09060;
+            padding: 0 24px;
+            margin-top: 4px;
+        }
+
+        .paper-tab {
+            font-family: var(--display);
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #8B7355;
+            background: rgba(176,144,96,0.07);
+            border: 1.5px solid #B09060;
+            border-bottom: none;
+            padding: 7px 12px;
+            cursor: pointer;
+            margin-right: 4px;
+            position: relative;
+            bottom: -1px;
+            border-radius: 3px 3px 0 0;
+            transition: background 0.15s, color 0.15s;
+        }
+
+        .paper-tab:hover {
+            background: rgba(176,144,96,0.14);
+            color: #5C3A1A;
+        }
+
+        .paper-tab.active {
+            background: var(--bg-panel);
+            color: #5C3A1A;
+            border-bottom-color: var(--bg-panel);
+            z-index: 1;
+        }
+
+        .paper-tab-content {
+            display: none;
+        }
+
+        .paper-tab-content.active {
+            display: block;
+        }
+
+        .journey-wrap {
+            padding: 14px 24px 20px;
+        }
+
+        .journey-episode-title {
+            font-family: var(--display);
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: #5C3A1A;
+            margin-top: 16px;
+            margin-bottom: 6px;
+            padding-bottom: 4px;
+            border-bottom: 1px solid rgba(176,144,96,0.35);
+        }
+
+        .journey-episode-title:first-child { margin-top: 0; }
+
+        .journey-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .journey-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(176,144,96,0.12);
+        }
+
+        .journey-item:last-child { border-bottom: none; }
+
+        .journey-item-img {
+            height: 80px;
+            width: auto;
+            flex-shrink: 0;
+            border-radius: 2px;
+            border: 1px solid rgba(176,144,96,0.35);
+            object-fit: cover;
+        }
+
+        .journey-item-text {
+            font-family: var(--display);
+            font-size: 12px;
+            letter-spacing: 0.22em;
+            color: #1A0E00;
+            margin-left: 1em;
+        }
+
+        .journey-empty {
+            font-size: 11px;
+            color: rgba(90,60,20,0.4);
+            padding: 20px 24px;
+            text-align: center;
+        }
+
+        /* ── MOBILE ──────────────────────────────────────── */
+        @media (max-width: 520px) {
+            .page {
+                padding: 16px 10px 80px;
+            }
+
+            .status-bar {
+                flex-wrap: wrap;
+                gap: 6px 10px;
+                font-size: 9px;
+            }
+
+            .status-right {
+                width: 100%;
+                margin-left: 0;
+            }
+
+            .folder {
+                padding: 20px 10px 14px;
+            }
+
+            .paper-header {
+                padding: 12px 14px 10px;
+                gap: 8px;
+            }
+
+            .paper-dept {
+                font-size: 7px;
+                letter-spacing: 0.14em;
+            }
+
+            .paper-title {
+                font-size: 17px;
+            }
+
+            .paper-stamp {
+                font-size: 10px;
+                padding: 3px 6px;
+            }
+
+            .profile-row {
+                flex-direction: column;
+                padding: 14px;
+                gap: 14px;
+            }
+
+            .profile-photo-col {
+                flex-direction: row;
+                padding-right: 0;
+                gap: 14px;
+                align-items: center;
+            }
+
+            .profile-photo {
+                width: 72px;
+                height: 93px;
+            }
+
+            .paper-records {
+                padding: 10px 10px 16px;
+            }
+
+            .paper-records-header {
+                margin: 8px 4px;
+            }
+
+            .paper-tabs {
+                padding: 0 10px;
+                flex-wrap: wrap;
+                gap: 4px 0;
+            }
+
+            .paper-tab {
+                font-size: 7.5px;
+                padding: 6px 9px;
+                letter-spacing: 0.1em;
+            }
+
+            .journey-wrap {
+                padding: 12px 12px 16px;
+            }
+
+            .journey-item-img {
+                height: 56px;
+            }
+
+            .journey-item-text {
+                font-size: 11px;
+                letter-spacing: 0.14em;
+            }
+
+            .page-footer {
+                font-size: 10px;
+                padding: 8px 14px;
+            }
+
+            .savepath-popup {
+                left: 0;
+                right: 0;
+                min-width: 0;
+                max-width: 100%;
+            }
+
+            .permalink-popup {
+                right: 0;
+                left: auto;
+                min-width: 0;
+                max-width: calc(100vw - 20px);
+            }
         }
     </style>
 </head>
@@ -1048,24 +1282,38 @@
 
                 <!-- Records -->
                 <div class="paper-records">
-                    <div class="paper-records-header">
-                        <span class="paper-section-title">Career Records</span>
-                        <span class="record-count">Records: <span id="varCount">0</span></span>
+                    <div class="paper-tabs">
+                        <button class="paper-tab active" data-tab="career-milestones">Career Milestones</button>
+                        <button class="paper-tab" data-tab="interpersonal">Interpersonal</button>
+                        <button class="paper-tab" data-tab="official-use-only">Official Use Only</button>
                     </div>
-                    <div class="search-row">
-                        <span class="search-prompt">&gt;_</span>
-                        <input type="text" id="searchInput" placeholder="Filter stats...">
+
+                    <div class="paper-tab-content active" id="tab-career-milestones">
                     </div>
-                    <div class="table-scroll">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th style="width:55%;">Stat Name</th>
-                                    <th style="width:45%;">Value</th>
-                                </tr>
-                            </thead>
-                            <tbody id="variablesTable"></tbody>
-                        </table>
+
+                    <div class="paper-tab-content" id="tab-interpersonal">
+                    </div>
+
+                    <div class="paper-tab-content" id="tab-official-use-only">
+                        <div class="paper-records-header">
+                            <span class="paper-section-title">Career Records</span>
+                            <span class="record-count">Records: <span id="varCount">0</span></span>
+                        </div>
+                        <div class="search-row">
+                            <span class="search-prompt">&gt;_</span>
+                            <input type="text" id="searchInput" placeholder="Filter stats...">
+                        </div>
+                        <div class="table-scroll">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th style="width:55%;">Stat Name</th>
+                                        <th style="width:45%;">Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="variablesTable"></tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
 
@@ -1088,6 +1336,7 @@
 <script type="module">
     import { SavReader } from './gvas_parser/sav_reader.js';
     import { stats_to_hash_map } from './gvas_parser/permalink_map.js';
+    import { player_journey } from './stats_catalog.js';
 
     const uploadZone     = document.getElementById('uploadZone');
     const fileInput      = document.getElementById('fileInput');
@@ -1172,7 +1421,7 @@
         fileSizeEl.textContent = formatFileSize(file.size);
         errorDisplay.classList.add('d-none');
 
-        const blinkPromise = blinkLED(2000);
+        const blinkPromise = blinkLED(1000);
 
         const parsePromise = new Promise((resolve, reject) => {
             const reader = new FileReader();
@@ -1224,6 +1473,7 @@
                 allStats = stats;
                 renderProfile(stats);
                 renderStats('');
+                renderJourney(stats);
             }
         });
     }
@@ -1335,6 +1585,92 @@
 
     searchInput.addEventListener('input', () => renderStats(searchInput.value));
 
+    function renderJourney(stats) {
+        function resolveCON(conKey, stats) {
+            for (const decisions of Object.values(player_journey)) {
+                const entry = decisions[conKey];
+                if (!entry) continue;
+                if (entry.type === 'relationship') return relationshipStatus(stats);
+                if (entry.stat && entry.threshold != null) {
+                    const sv = stats[entry.stat];
+                    return sv == null ? null : (sv >= entry.threshold ? 1 : 0);
+                }
+            }
+            return null;
+        }
+
+        function resolveOutcome(outcome, stats) {
+            if (!outcome) return null;
+            if (outcome.stat) {
+                const sv = outcome.stat.startsWith('CON_')
+                    ? resolveCON(outcome.stat, stats)
+                    : stats[outcome.stat];
+                if (sv == null) return null;
+                return outcome.values?.[sv] ?? null;
+            }
+            return outcome;
+        }
+
+        function buildHtml(filterCategory) {
+            let html = '<div class="journey-wrap">';
+            let anyItem = false;
+
+            for (const [episode, decisions] of Object.entries(player_journey)) {
+                const items = [];
+                for (const [statKey, outcomes] of Object.entries(decisions)) {
+                    let resolvedItems = [];
+                    if (statKey.startsWith('CON_')) {
+                        if (episode === 'Episode 8' && stats['BV_Save ZTeamer'] == null) continue;
+                        if (outcomes.type === 'relationship') {
+                            const status = relationshipStatus(stats);
+                            if (!status) continue;
+                            const statusOutcomes = outcomes[status];
+                            if (!statusOutcomes) continue;
+                            resolvedItems = Array.isArray(statusOutcomes) ? statusOutcomes : [statusOutcomes];
+                        } else {
+                            const secondaryVal = stats[outcomes.stat];
+                            if (secondaryVal == null) continue;
+                            const effectiveVal = secondaryVal >= outcomes.threshold ? 1 : 0;
+                            const r = outcomes[effectiveVal] ?? null;
+                            if (r) resolvedItems = [r];
+                        }
+                    } else {
+                        const val = stats[statKey];
+                        if (val == null) continue;
+                        if (statKey === 'BV_Leaned In' && (stats['NV_SweetExitCounter'] ?? 0) < 10) continue;
+                        const r = resolveOutcome(outcomes[val], stats);
+                        if (r) resolvedItems = [r];
+                    }
+                    for (const resolved of resolvedItems) {
+                        if (resolved?.title && filterCategory.includes(resolved.category)) {
+                            const raw = resolved.image ?? '';
+                            const imgSrc = raw ? `assets/img/choices/${raw.split('/').pop()}` : '';
+                            items.push({ title: resolved.title, imgSrc });
+                        }
+                    }
+                }
+                if (!items.length) continue;
+                anyItem = true;
+                html += `<div class="journey-episode-title">${episode}</div><ul class="journey-list">`;
+                html += items.map(({ title, imgSrc }) => {
+                    const img = imgSrc ? `<img class="journey-item-img" src="${imgSrc}" alt="">` : '';
+                    return `<li class="journey-item">${img}<span class="journey-item-text">${title}</span></li>`;
+                }).join('');
+                html += `</ul>`;
+            }
+
+            if (!anyItem) html += '<div class="journey-empty">No records found.</div>';
+            html += '</div>';
+            return html;
+        }
+
+        const careerEl = document.getElementById('tab-career-milestones');
+        if (careerEl) careerEl.innerHTML = buildHtml(['career', 'romantic']);
+
+        const interpersonalEl = document.getElementById('tab-interpersonal');
+        if (interpersonalEl) interpersonalEl.innerHTML = buildHtml(['romantic']);
+    }
+
     function resetToUpload() {
         fileInput.value = '';
         fileInfoSection.classList.add('d-none');
@@ -1343,6 +1679,10 @@
         errorDisplay.classList.add('d-none');
         searchInput.value = '';
         variablesTable.innerHTML = '';
+        const journeyEl = document.getElementById('tab-career-milestones');
+        if (journeyEl) journeyEl.innerHTML = '';
+        const interpersonalEl = document.getElementById('tab-interpersonal');
+        if (interpersonalEl) interpersonalEl.innerHTML = '';
         allStats = {};
         savepathHint.classList.remove('d-none');
         history.replaceState(null, '', window.location.pathname);
@@ -1355,19 +1695,44 @@
         let decoded;
         try { decoded = atob(encoded); } catch { return; }
 
-        const reverseMap = {};
-        for (const [fullName, shortCode] of Object.entries(stats_to_hash_map)) {
-            reverseMap[shortCode] = fullName;
-        }
-
-        const stats = {};
+        const segments = {};
         for (const pair of decoded.split('|')) {
             const colon = pair.indexOf(':');
             if (colon === -1) continue;
-            const shortCode = pair.slice(0, colon);
-            const value     = pair.slice(colon + 1);
-            const fullName  = reverseMap[shortCode];
-            if (fullName != null) stats[fullName] = Number(value);
+            segments[pair.slice(0, colon)] = pair.slice(colon + 1);
+        }
+
+        const stats = {};
+
+        if ('bp' in segments) {
+            // New format: boolean bitmasks + integer id:value pairs
+            const bPresence = BigInt(segments.bp);
+            const bValues   = BigInt(segments.bv ?? '0');
+            const idMap     = {};
+            for (const [fullName, entry] of Object.entries(stats_to_hash_map)) {
+                idMap[entry.id] = { fullName, type: entry.type };
+            }
+            for (const [fullName, entry] of Object.entries(stats_to_hash_map)) {
+                if (entry.type === 'boolean' && (bPresence >> BigInt(entry.id)) & 1n) {
+                    stats[fullName] = Number((bValues >> BigInt(entry.id)) & 1n);
+                }
+            }
+            for (const [key, value] of Object.entries(segments)) {
+                const numId = Number(key);
+                if (!isNaN(numId) && idMap[numId]?.type === 'integer') {
+                    stats[idMap[numId].fullName] = Number(value);
+                }
+            }
+        } else {
+            // Old format: label:value pairs
+            const reverseMap = {};
+            for (const [fullName, entry] of Object.entries(stats_to_hash_map)) {
+                reverseMap[entry.label] = fullName;
+            }
+            for (const [key, value] of Object.entries(segments)) {
+                const fullName = reverseMap[key];
+                if (fullName != null) stats[fullName] = Number(value);
+            }
         }
 
         if (!Object.keys(stats).length) return;
@@ -1381,18 +1746,29 @@
         fileInfoSection.classList.remove('d-none');
         renderProfile(stats);
         renderStats('');
+        renderJourney(stats);
     }
 
     loadFromPermalink();
 
     function generatePermalink(stats) {
-        const parts = [];
-        for (const [fullName, shortCode] of Object.entries(stats_to_hash_map)) {
-            if (stats[fullName] != null) {
-                parts.push(`${shortCode}:${stats[fullName]}`);
+        let bPresence = 0n;
+        let bValues   = 0n;
+        const parts   = [];
+
+        for (const [fullName, entry] of Object.entries(stats_to_hash_map)) {
+            const val = stats[fullName];
+            if (val == null) continue;
+            if (entry.type === 'boolean') {
+                const bit = 1n << BigInt(entry.id);
+                bPresence |= bit;
+                if (val) bValues |= bit;
+            } else {
+                parts.push(`${entry.id}:${val}`);
             }
         }
-        const encoded = btoa(parts.join('|'));
+
+        const encoded = btoa([`bp:${bPresence}`, `bv:${bValues}`, ...parts].join('|'));
         return window.location.origin + window.location.pathname + '?s=' + encoded;
     }
 
@@ -1426,6 +1802,15 @@
     document.addEventListener('click', () => {
         savepathPopup.classList.remove('is-open');
         permalinkPopup.classList.remove('is-open');
+    });
+
+    document.querySelectorAll('.paper-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            document.querySelectorAll('.paper-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.paper-tab-content').forEach(c => c.classList.remove('active'));
+            tab.classList.add('active');
+            document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+        });
     });
 </script>
 </body>
