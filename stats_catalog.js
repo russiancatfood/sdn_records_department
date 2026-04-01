@@ -103,16 +103,16 @@ export const player_journey = {
                 'image' : '102_royd_bro_fist.jpg'
             },
             0 : {
-                'title' : "Left Royd haging",
+                'title' : "Left Royd hanging",
                 'category': 'career',
                 'image' : '102_left_royd_hanging.jpg'
             }
         },
         'BV_Chose Disarm Granny' : {
             0 : {
-                'title' : "Ordered Visi to disarm LightningStrike",
+                'title' : "Ordered Visi to disarm Lightningstruck",
                 'category': 'career',
-                'image' : '102_disarm_lightningstrike.jpg'
+                'image' : '102_disarm_lightningstruck.jpg'
             },
             1 : {
                 'title' : "Ordered Visi to disarm Granny",
@@ -136,7 +136,7 @@ export const player_journey = {
     "Episode 3" : {
         'BV_Kick Out Golem' : {
             0 : {
-                'title' : "Gave Golem a chair",
+                'title' : "Gave Golem the chair",
                 'category': 'career',
                 'image' : '103_golem_chair.jpg'
             },
@@ -205,7 +205,7 @@ export const player_journey = {
                 'image' : '105_second_date.jpg'
             },
             1 : {
-                'title' : "Pumped the breaks on the romance",
+                'title' : "Pumped the breaks on the Blazer romance",
                 'category': 'romantic',
                 'image' : '105_pump_the_brakes.jpg'
             }
@@ -253,7 +253,7 @@ export const player_journey = {
                 'image' : '107_invisigals_fate_all_choices.jpg'
             },
             1 : {
-                'title' : "Cut Invisigal",
+                'title' : "Cut Invisigal from the team",
                 'category': 'career',
                 'image' : '107_invisigals_fate_all_choices.jpg'
             }
@@ -272,7 +272,7 @@ export const player_journey = {
         },
         'BV_Said Track Star' : {
             1 : {
-                'title' : "Honored Track Star in the press release",
+                'title' : "Honored TrackStar in the press release",
                 'category': 'career',
                 'image' : '107_pr_statement.jpg'
             },
@@ -379,7 +379,7 @@ export const player_journey = {
                         'image' : '108_spared_shroud.jpg'
                     },
                     0: {
-                        'title' : "Helplessly watched as Visi stabbed Shrowd",
+                        'title' : "Helplessly watched as Visi killed Shrowd",
                         'category': 'career',
                         'image' : '108_visi_killed.jpg'
                     }
