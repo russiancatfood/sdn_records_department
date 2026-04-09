@@ -226,7 +226,7 @@ export const player_journey = {
     "Episode 7" : {
         'BV_Chose Twinkies' : {
             1 : {
-                'title' : 'Asked TrackStar for Twinkies',
+                'title' : 'Asked Track Star for Twinkies',
                 'category': 'career',
                 'image' : '107_twinkies.jpg'
             },
@@ -272,7 +272,7 @@ export const player_journey = {
         },
         'BV_Said Track Star' : {
             1 : {
-                'title' : "Honored TrackStar in the press release",
+                'title' : "Honored Track Star in the press release",
                 'category': 'career',
                 'image' : '107_pr_statement.jpg'
             },
