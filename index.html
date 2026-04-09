@@ -1559,7 +1559,7 @@
     }
 
     function relationshipStatus(stats) {
-        const bb = (stats["BV_104 Kissed Blazer"] && !(stats["BV_BackedOutBlazer"]));
+        const bb = (stats["BV_104 Kissed Blazer"] || !(stats["BV_BackedOutBlazer"]));
         const visi = ((stats["NV_SweetExitCounter"] >= 10) && stats["BV_Leaned In"]);
 
         if(bb && !visi){
