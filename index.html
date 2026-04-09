@@ -1339,9 +1339,9 @@
 </script>
 
 <script type="module">
-    import { SavReader } from './gvas_parser/sav_reader.js?e21b4f7c85';
-    import { stats_to_hash_map } from './gvas_parser/permalink_map.js?e21b4f7c85';
-    import { player_journey } from './stats_catalog.js?e21b4f7c85';
+    import { SavReader } from './gvas_parser/sav_reader.js?a37263d';
+    import { stats_to_hash_map } from './gvas_parser/permalink_map.js?a37263d';
+    import { player_journey } from './stats_catalog.js?a37263d';
 
     const uploadZone     = document.getElementById('uploadZone');
     const fileInput      = document.getElementById('fileInput');
@@ -1559,8 +1559,12 @@
     }
 
     function relationshipStatus(stats) {
-        const bb = (stats["BV_104 Kissed Blazer"] || !(stats["BV_BackedOutBlazer"]));
-        const visi = ((stats["NV_SweetExitCounter"] >= 10) && stats["BV_Leaned In"]);
+        let bb = (stats["BV_Chose Invisigal"]? 
+                    0 
+                    : stats["BV_104 Kissed Blazer"]? 
+                        1
+                        : !(stats["BV_BackedOutBlazer"]));
+        let visi = ((stats["NV_SweetExitCounter"] >= 10) && stats["BV_Leaned In"]);
 
         if(bb && !visi){
             return "Blonde Blazer (Mandy)";
