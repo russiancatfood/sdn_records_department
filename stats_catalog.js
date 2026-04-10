@@ -98,7 +98,7 @@ export const player_journey = {
     "Episode 2" : {
         'BV_102 Fist Bump Royd' : {
             1 : {
-                'title' : "Fist bumped Royd",
+                'title' : "Fist-bumped Royd",
                 'category': 'career',
                 'image' : '102_royd_bro_fist.jpg'
             },
@@ -205,7 +205,7 @@ export const player_journey = {
                 'image' : '105_second_date.jpg'
             },
             1 : {
-                'title' : "Pumped the breaks on the Blazer romance",
+                'title' : "Pumped the brakes on the Blazer romance",
                 'category': 'romantic',
                 'image' : '105_pump_the_brakes.jpg'
             }
@@ -289,7 +289,7 @@ export const player_journey = {
                 'image' : '107_glassed_him.jpg'
             },
             0 : {
-                'title' : "Kept your cool, and let the insults go",
+                'title' : "Kept your cool and let the insults go",
                 'category': 'career',
                 'image' : '107_let_it_go.jpg'
             }
@@ -366,7 +366,7 @@ export const player_journey = {
         },
         'BV_Robert Killed Shroud' : {
             1 : {
-                'title' : "Choked Shroud to death, exacting your revange",
+                'title' : "Choked Shroud to death, exacting your revenge",
                 'category': 'career',
                 'image' : '108_killed_shroud.jpg'
             },
@@ -379,7 +379,7 @@ export const player_journey = {
                         'image' : '108_spared_shroud.jpg'
                     },
                     0: {
-                        'title' : "Helplessly watched as Visi killed Shrowd",
+                        'title' : "Helplessly watched as Visi killed Shroud",
                         'category': 'career',
                         'image' : '108_visi_killed.jpg'
                     }
@@ -427,7 +427,7 @@ export const player_journey = {
                 'image' : '108_visi_hero.jpg'
             },
             0: {
-                'title': 'Failed as a mentor for Visi, leading her to embrace villany',
+                'title': 'Failed as a mentor for Visi, leading her to embrace villainy',
                 'category': 'career',
                 'image' : '108_visi_evil.jpg'
             }
@@ -435,12 +435,12 @@ export const player_journey = {
         'CON_Relationship' : {
             "type" : "relationship",
             "Blonde Blazer (Mandy)" : {
-                'title': 'You and Mandy are officialy an item',
+                'title': 'You and Mandy are officially an item',
                 'category': 'romantic',
                 'image' : 'overall_romance_blazer.jpg'
             },
             "Invisigal (Courtney)" : {
-                'title': 'You and Courtney are officialy an item',
+                'title': 'You and Courtney are officially an item',
                 'category': 'romantic',
                 'image' : 'overall_romance_visi.jpg'
             },
@@ -450,7 +450,7 @@ export const player_journey = {
                 'image' : 'overall_romance_both.jpg'
             },
             "None" : {
-                'title': 'Put your career first, and avoided any ineter-office relationships',
+                'title': 'Put your career first, and avoided any inter-office relationships',
                 'category': 'romantic',
                 'image' : 'overall_romance_none.jpg'
             }
