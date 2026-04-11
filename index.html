@@ -725,6 +725,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             align-content: start;
+            border-right: 1px solid rgba(176,144,96,0.25);
         }
 
         .field-row {
@@ -754,8 +755,10 @@
             letter-spacing: 0.04em;
         }
 
-        .field-bool-yes { color: #1A5C1A; }
-        .field-bool-no  { color: #7A1A1A; }
+        .field-bool-yes  { color: #1A5C1A; }
+        .field-bool-no   { color: #7A1A1A; }
+        .field-stat-good { color: #1A5C1A; }
+        .field-stat-warn { color: #8B4500; }
 
         .field-section {
             grid-column: 1 / -1;
@@ -776,6 +779,22 @@
         .field-row--full {
             grid-column: 1 / -1;
             padding: 6px 14px;
+        }
+
+        .field-top-row {
+            grid-column: 1 / -1;
+            display: flex;
+        }
+
+        .field-top-row .field-cell {
+            flex: 1;
+            padding: 10px 14px;
+            border-bottom: 1px solid rgba(176,144,96,0.25);
+            border-left: 1px solid rgba(176,144,96,0.25);
+        }
+
+        .field-top-row .field-cell:last-child {
+            border-right: none;
         }
 
         .paper-records {
@@ -1245,13 +1264,19 @@
                         <div class="profile-caption">R. Robertson III</div>
                     </div>
                     <div class="profile-fields">
-                        <div class="field-row">
-                            <div class="field-label">Mentor Count</div>
-                            <div class="field-value" id="pf-mentor-count">—</div>
-                        </div>
-                        <div class="field-row">
-                            <div class="field-label">Hero / Antihero</div>
-                            <div class="field-value" id="pf-hero-antihero">—</div>
+                        <div class="field-top-row">
+                            <div class="field-cell">
+                                <div class="field-label">Mentor Score</div>
+                                <div class="field-value" id="pf-mentor-count" title="You need Mentor Score above 45 for a 'Hero Visi' ending">—</div>
+                            </div>
+                            <div class="field-cell">
+                                <div class="field-label">Hero / Antihero</div>
+                                <div class="field-value" id="pf-hero-antihero">—</div>
+                            </div>
+                            <div class="field-cell">
+                                <div class="field-label">Sweet Exit</div>
+                                <div class="field-value" id="pf-sweet-exit" title="This is Visi's romantic interest in you. You need at least 10 to get pinned to the lockers.">—</div>
+                            </div>
                         </div>
                         <div class="field-row">
                             <div class="field-label">Terminations</div>
@@ -1496,7 +1521,11 @@
                 el.className = 'field-value ' + (val ? 'field-bool-yes' : 'field-bool-no');
             } else {
                 el.textContent = val;
-                el.className = 'field-value';
+                if (elId === 'pf-mentor-count') {
+                    el.className = 'field-value ' + (val >= 45 ? 'field-stat-good' : 'field-stat-warn');
+                } else {
+                    el.className = 'field-value';
+                }
             }
         }
 
@@ -1522,6 +1551,13 @@
             const anti = stats['NV_Robert Antihero'];
             heroAntiEl.textContent = `${hero ?? '—'} / ${anti ?? '—'}`;
             heroAntiEl.className = 'field-value';
+        }
+
+        const sweetExitEl = document.getElementById('pf-sweet-exit');
+        if (sweetExitEl) {
+            const val = stats['NV_SweetExitCounter'];
+            sweetExitEl.textContent = val ?? '—';
+            sweetExitEl.className = 'field-value' + (val == null ? '' : val >= 10 ? ' field-stat-good' : ' field-stat-warn');
         }
 
         const relEl = document.getElementById('pf-relationship');
@@ -1751,7 +1787,6 @@
         fileSizeEl.textContent = '—';
         uploadZone.classList.add('d-none');
         savepathHint.classList.add('d-none');
-        linkBtn.classList.add('d-none');
         fileInfoSection.classList.remove('d-none');
         renderProfile(stats);
         renderStats('');
